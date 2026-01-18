@@ -2,7 +2,6 @@ import streamlit as st
 import torch
 import torch.nn as nn
 from torch.serialization import MAP_LOCATION
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 model = model = nn.Sequential(
@@ -14,9 +13,8 @@ model = model = nn.Sequential(
     nn.ReLU(),
     nn.Linear(8, 1)
 )
-model.load_state_dict(torch.load("model_weights_bath32_lr0.005_agegroup.pth"), map_location=DEVICE)
+model.load_state_dict(torch.load("model_weights_bath32_lr0.005_agegroup.pth"))
 model.eval()
-model.to(DEVICE)
 st.title("Titanic Survival Prediction 🚢")
 st.write("Введите данные пассажира")
 
@@ -54,7 +52,7 @@ inputs = [ps,pclass,age,s,sibsp,parch,ticket,price,e,agegroup]
 
 
 if st.button("Predict"):
-    x = torch.tensor(inputs, dtype=torch.float32).unsqueeze(0).to(DEVICE)
+    x = torch.tensor(inputs, dtype=torch.float32).unsqueeze(0)
 
     with torch.no_grad():
         logit = model(x)

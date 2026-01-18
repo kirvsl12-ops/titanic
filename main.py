@@ -13,7 +13,7 @@ model = model = nn.Sequential(
     nn.ReLU(),
     nn.Linear(8, 1)
 )
-model.load_state_dict(torch.load("model_weights_bath32_lr0.005_agegroup.pth"))
+model.load_state_dict(torch.load("model_weights_bath32_lr0.005_agegroup.pth"), map_location=torch.device('cpu'))
 model.eval()
 st.title("Titanic Survival Prediction 🚢")
 st.write("Введите данные пассажира")
